@@ -6,12 +6,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect("mongodb://localhost:27017/vinted-phoenix");
+mongoose.connect(process.env.MONGODB_URI);
 // Je me connect à cloudinary
 cloudinary.config({
-  cloud_name: "dw6rfhtj7",
-  api_key: "363994899767859",
-  api_secret: "UN_eq9HggTbqfrw6BLMwHI-S5Ls",
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
 const userRoutes = require("./routes/user");
@@ -23,6 +23,6 @@ app.all("*", (req, res) => {
   res.status(404).json({ message: "This route does not exist" });
 });
 
-app.listen(3000, () => {
+app.listen(process.env.PORT, () => {
   console.log("Server started");
 });
